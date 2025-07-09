@@ -14,15 +14,22 @@ import { taskAPI } from "../services/api";
 import toast from "react-hot-toast";
 
 const Dashboard = () => {
+  // Core task management state
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // UI state for form and editing
   const [showForm, setShowForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+
+  // Delete confirmation modal state
   const [deleteModal, setDeleteModal] = useState({
     isOpen: false,
     taskId: null,
     taskTitle: "",
   });
+
+  // Filters and search state - triggers refetch when changed
   const [filters, setFilters] = useState({
     search: "",
     status: "",
@@ -30,10 +37,12 @@ const Dashboard = () => {
     sortBy: "createdAt",
   });
 
+  // Fetch tasks whenever filters change
   useEffect(() => {
     fetchTasks();
   }, [filters]);
 
+  // Main data fetching function with error handling
   const fetchTasks = async () => {
     try {
       setLoading(true);
@@ -46,9 +55,11 @@ const Dashboard = () => {
     }
   };
 
+  // Task CRUD operations with optimistic UI updates
   const handleCreateTask = async (taskData) => {
     try {
       const response = await taskAPI.createTask(taskData);
+      // Add new task to the beginning of the list
       setTasks([response.data.task, ...tasks]);
       setShowForm(false);
       toast.success("✨ Task created successfully!");
@@ -60,6 +71,7 @@ const Dashboard = () => {
   const handleUpdateTask = async (taskData) => {
     try {
       const response = await taskAPI.updateTask(editingTask._id, taskData);
+      // Update the specific task in the list
       setTasks(
         tasks.map((task) =>
           task._id === editingTask._id ? response.data.task : task
@@ -73,6 +85,7 @@ const Dashboard = () => {
     }
   };
 
+  // Two-step deletion process: show confirmation modal first
   const handleDeleteTask = async (taskId) => {
     const task = tasks.find((t) => t._id === taskId);
     setDeleteModal({
@@ -82,9 +95,11 @@ const Dashboard = () => {
     });
   };
 
+  // Actual deletion after confirmation
   const confirmDeleteTask = async () => {
     try {
       await taskAPI.deleteTask(deleteModal.taskId);
+      // Remove task from local state
       setTasks(tasks.filter((task) => task._id !== deleteModal.taskId));
       setDeleteModal({ isOpen: false, taskId: null, taskTitle: "" });
       toast.success("🗑️ Task deleted successfully!");
@@ -93,10 +108,12 @@ const Dashboard = () => {
     }
   };
 
+  // Reset modal state
   const cancelDeleteTask = () => {
     setDeleteModal({ isOpen: false, taskId: null, taskTitle: "" });
   };
 
+  // UI event handlers for form management
   const handleEditTask = (task) => {
     setEditingTask(task);
     setShowForm(true);
@@ -107,6 +124,7 @@ const Dashboard = () => {
     setEditingTask(null);
   };
 
+  // Route form submission based on edit mode
   const handleFormSubmit = (taskData) => {
     if (editingTask) {
       handleUpdateTask(taskData);

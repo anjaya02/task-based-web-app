@@ -3,10 +3,12 @@ import toast from "react-hot-toast";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
+// Create axios instance with base configuration
 const api = axios.create({
   baseURL: API_URL,
 });
 
+// Request interceptor to add auth token to all requests
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
@@ -15,6 +17,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Response interceptor for global error handling and user feedback
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -24,7 +27,7 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // Server error responses
+    // Server error responses with user-friendly messages
     const { status, data } = error.response;
 
     switch (status) {
@@ -66,7 +69,7 @@ api.interceptors.response.use(
         break;
 
       default:
-        // For other status codes, show the server message or a generic error
+        // Generic error handling for unexpected status codes
         const message = data?.message || `Request failed with status ${status}`;
         toast.error(`❌ ${message}`);
     }
@@ -75,6 +78,7 @@ api.interceptors.response.use(
   }
 );
 
+// Authentication API endpoints
 export const authAPI = {
   login: (email, password) => api.post("/auth/login", { email, password }),
   register: (name, email, password) =>
@@ -82,8 +86,9 @@ export const authAPI = {
   getProfile: () => api.get("/auth/profile"),
 };
 
+// Task management API endpoints
 export const taskAPI = {
-  getTasks: (params) => api.get("/tasks", { params }),
+  getTasks: (params) => api.get("/tasks", { params }), // Supports filtering/sorting
   createTask: (task) => api.post("/tasks", task),
   updateTask: (id, task) => api.put(`/tasks/${id}`, task),
   deleteTask: (id) => api.delete(`/tasks/${id}`),

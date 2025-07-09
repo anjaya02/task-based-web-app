@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Task schema with comprehensive validation and indexing
 const taskSchema = new mongoose.Schema(
   {
     title: {
@@ -26,17 +27,17 @@ const taskSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: true, // Every task must belong to a user
     },
   },
   {
-    timestamps: true,
+    timestamps: true, // Adds createdAt and updatedAt fields
   }
 );
 
-// Index for better query performance
-taskSchema.index({ user: 1, createdAt: -1 });
-taskSchema.index({ user: 1, status: 1 });
-taskSchema.index({ user: 1, priority: 1 });
+// Database indexes for optimal query performance
+taskSchema.index({ user: 1, createdAt: -1 }); // User tasks sorted by date
+taskSchema.index({ user: 1, status: 1 }); // Filter by status
+taskSchema.index({ user: 1, priority: 1 }); // Filter by priority
 
 export default mongoose.model("Task", taskSchema);

@@ -1,23 +1,25 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
+// JWT token generation helper
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN || "7d",
   });
 };
 
+// User registration endpoint
 export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Check if user already exists
+    // Prevent duplicate registrations
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Create user
+    // Create new user (password hashing handled by model middleware)
     const user = await User.create({ name, email, password });
     const token = generateToken(user._id);
 
@@ -32,22 +34,24 @@ export const register = async (req, res) => {
   }
 };
 
+// User login endpoint with credential validation
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check if user exists
+    // Find user and include password field for comparison
     const user = await User.findOne({ email }).select("+password");
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Check password
+    // Verify password using model method
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
+    // Generate JWT for authenticated session
     const token = generateToken(user._id);
 
     res.json({
@@ -65,11 +69,12 @@ export const login = async (req, res) => {
   }
 };
 
+// Protected profile endpoint - user populated by auth middleware
 export const getProfile = async (req, res) => {
   try {
     res.json({
       message: "Profile retrieved successfully",
-      user: req.user,
+      user: req.user, // User object added by auth middleware
     });
   } catch (error) {
     console.error("Get profile error:", error);

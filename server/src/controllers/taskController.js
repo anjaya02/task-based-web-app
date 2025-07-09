@@ -1,5 +1,6 @@
 import Task from "../models/Task.js";
 
+// Get tasks with filtering, sorting, and pagination
 export const getTasks = async (req, res) => {
   try {
     const {
@@ -11,9 +12,10 @@ export const getTasks = async (req, res) => {
       limit = 10,
     } = req.query;
 
-    // Build filter object
+    // Base filter - only user's tasks
     const filter = { user: req.user._id };
 
+    // Add search filters if provided
     if (search) {
       filter.$or = [
         { title: { $regex: search, $options: "i" } },
@@ -21,28 +23,32 @@ export const getTasks = async (req, res) => {
       ];
     }
 
+    // Add status filter
     if (status) {
       filter.status = status;
     }
 
+    // Add priority filter
     if (priority) {
       filter.priority = priority;
     }
 
-    // Build sort object
+    // Configure sorting options
     const sortOptions = {};
     switch (sortBy) {
       case "title":
         sortOptions.title = 1;
         break;
       case "priority":
+        // Note: Could implement custom priority sorting logic here
         const priorityOrder = { high: 3, medium: 2, low: 1 };
         sortOptions.priority = 1;
         break;
       default:
-        sortOptions.createdAt = -1;
+        sortOptions.createdAt = -1; // Newest first
     }
 
+    // Execute query with pagination
     const tasks = await Task.find(filter)
       .sort(sortOptions)
       .limit(limit * 1)

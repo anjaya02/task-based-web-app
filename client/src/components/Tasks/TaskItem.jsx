@@ -2,6 +2,7 @@ import React from "react";
 import { Edit, Trash2, Clock, AlertCircle, CheckCircle } from "lucide-react";
 
 const TaskItem = ({ task, onEdit, onDelete }) => {
+  // Color mapping for task priority badges
   const getPriorityColor = (priority) => {
     switch (priority) {
       case "high":
@@ -15,6 +16,7 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
     }
   };
 
+  // Icon selection based on task status
   const getStatusIcon = (status) => {
     switch (status) {
       case "completed":
@@ -26,6 +28,7 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
     }
   };
 
+  // Color mapping for status badges
   const getStatusColor = (status) => {
     switch (status) {
       case "completed":
@@ -38,13 +41,15 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
   };
 
   return (
+    // Main card with glassmorphism effect and hover animations
     <div className="group bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-white/50 p-4 sm:p-6 hover:shadow-2xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
-      {/* Decorative background gradient */}
+      {/* Decorative background element for visual interest */}
       <div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full -translate-y-8 translate-x-8 sm:-translate-y-10 sm:translate-x-10 opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
 
       <div className="relative z-10">
         <div className="flex items-start justify-between mb-3 sm:mb-4">
           <div className="flex-1 min-w-0">
+            {/* Task title and status section */}
             <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 mb-3">
               <h3 className="font-bold text-base sm:text-lg text-gray-900 group-hover:text-blue-900 transition-colors duration-200 truncate">
                 {task.title}

@@ -3,7 +3,8 @@ import { authAPI } from "../services/api";
 
 const AuthContext = createContext();
 
-// Use a more HMR-friendly pattern by avoiding inline function definitions
+// Custom hook for accessing auth context with error boundary
+// More HMR-friendly pattern by avoiding inline function definitions
 function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
@@ -13,13 +14,16 @@ function useAuth() {
 }
 
 function AuthProvider({ children }) {
+  // Core auth state
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Check authentication status on app load
   useEffect(() => {
     checkAuth();
   }, []);
 
+  // Verify stored token and fetch user profile
   const checkAuth = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -36,6 +40,7 @@ function AuthProvider({ children }) {
     }
   };
 
+  // Login user and store token
   const login = async (email, password) => {
     const response = await authAPI.login(email, password);
     const { token, user } = response.data;
@@ -44,6 +49,7 @@ function AuthProvider({ children }) {
     return response;
   };
 
+  // Register new user and auto-login
   const register = async (name, email, password) => {
     const response = await authAPI.register(name, email, password);
     const { token, user } = response.data;
@@ -52,11 +58,13 @@ function AuthProvider({ children }) {
     return response;
   };
 
+  // Clear user session and token
   const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
   };
 
+  // Context value object - stable reference for performance
   const value = {
     user,
     login,

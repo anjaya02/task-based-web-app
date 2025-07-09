@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
+// User schema with validation and security features
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -23,14 +24,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters"],
+      select: false, // Don't include password in queries by default
     },
   },
   {
-    timestamps: true,
+    timestamps: true, // Adds createdAt and updatedAt fields
   }
 );
 
+// Hash password before saving - middleware runs on save/create
 userSchema.pre("save", async function (next) {
+  // Only hash if password is modified (new user or password change)
   if (!this.isModified("password")) return next();
 
   const salt = await bcrypt.genSalt(10);
@@ -38,13 +42,15 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// Instance method to compare provided password with hashed password
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
+// Override toJSON to remove password from response objects
 userSchema.methods.toJSON = function () {
   const user = this.toObject();
-  delete user.password;
+  delete user.password; // Never send password to client
   return user;
 };
 
