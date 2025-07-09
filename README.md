@@ -202,8 +202,6 @@ npm test
 
 This project is licensed under the MIT License.
 
-🌍 Live Demo: \[your-live-site-link]
-
 ## Support
 
 For support, email [anjayainduwara@gmail.com](mailto:anjayainduwara@gmail.com) or create an issue in the repository.
