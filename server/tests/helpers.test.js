@@ -1,6 +1,7 @@
 const {
   validateEmail,
   validatePassword,
+  getPasswordStrength,
   formatTaskResponse,
   sanitizeUserResponse,
 } = require("../src/utils/helpers.js");
@@ -33,6 +34,29 @@ describe("Server Utilities", () => {
       expect(validatePassword("PASSWORD")).toBe(false); // no lowercase, no number
       expect(validatePassword("12345")).toBe(false); // no letters
       expect(validatePassword("Pass1")).toBe(false); // too short
+    });
+  });
+
+  describe("getPasswordStrength", () => {
+    it("should rate password strength correctly", () => {
+      expect(getPasswordStrength("Pass1")).toEqual({
+        score: 3,
+        label: "Medium",
+      });
+      expect(getPasswordStrength("Password123")).toEqual({
+        score: 5,
+        label: "Strong",
+      }); // 8+ chars bonus
+      expect(getPasswordStrength("Password123!")).toEqual({
+        score: 6,
+        label: "Strong",
+      });
+      expect(getPasswordStrength("MyStr0ng!Pass")).toEqual({
+        score: 6,
+        label: "Strong",
+      });
+      expect(getPasswordStrength("weak")).toEqual({ score: 1, label: "Weak" });
+      expect(getPasswordStrength("")).toEqual({ score: 0, label: "Invalid" });
     });
   });
 

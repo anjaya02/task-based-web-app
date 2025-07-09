@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { CheckSquare, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import PasswordStrengthIndicator from "../components/Common/PasswordStrengthIndicator";
 import toast from "react-hot-toast";
 
 const Register = () => {
@@ -129,6 +130,8 @@ const Register = () => {
                     )}
                   </button>
                 </div>
+                {/* Password strength indicator */}
+                <PasswordStrengthIndicator password={formData.password} />
               </div>
 
               <div>
