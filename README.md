@@ -10,9 +10,12 @@ A full-stack task management web application built with React.js, Node.js, Expre
 - ✅ **Task Management**: Create, read, update, and delete tasks
 - 🔍 **Search & Filter**: Search tasks by title/description, filter by status and priority
 - 📊 **Sort Options**: Sort tasks by date, title, or priority
-- 🎨 **Clean UI**: Responsive design with Tailwind CSS
-- 🧪 **Testing**: Unit tests for utility functions and React components
+- 🎨 **Modern UI**: Responsive design with glassmorphism effects and Tailwind CSS
+- � **Custom Modals**: Professional confirmation dialogs for critical actions
+- �🧪 **Comprehensive Testing**: Unit tests for both frontend and backend components
 - 🔒 **Secure**: Input validation, authentication middleware, and error handling
+- 🚀 **Production Ready**: Docker support, error boundaries, and optimized builds
+- 📝 **Well Documented**: Comprehensive code comments and clear documentation
 
 ## Tech Stack
 
@@ -43,7 +46,22 @@ A full-stack task management web application built with React.js, Node.js, Expre
 
 ## Installation & Setup
 
-### Option 1: Manual Setup
+### Option 1: Quick Start (Recommended)
+
+1. **Clone and setup everything with one command**
+
+   ```bash
+   git clone https://github.com/anjaya02/task-based-web-app.git
+   cd task-based-web-app
+   npm install  # Installs dependencies for both client and server
+   npm run dev  # Starts both client and server concurrently
+   ```
+
+2. **Set up MongoDB**
+   You can use MongoDB Atlas or install MongoDB locally.
+   Update the MONGODB_URI in server/.env accordingly.
+
+### Option 2: Manual Setup
 
 1. **Clone the repository**
 
@@ -74,7 +92,7 @@ A full-stack task management web application built with React.js, Node.js, Expre
    You can use MongoDB Atlas or install MongoDB locally.
    Update the MONGODB_URI in server/.env accordingly.
 
-### Option 2: Docker Setup
+### Option 3: Docker Setup
 
 1. **Clone the repository**
 
@@ -87,6 +105,7 @@ A full-stack task management web application built with React.js, Node.js, Expre
 
    ```bash
    docker-compose up --build
+   # Or use the npm script: npm run docker:up
    ```
 
 This will start:
@@ -115,6 +134,17 @@ Create a `.env` file in the client folder with the following:
 VITE_API_URL=http://localhost:5000/api
 ```
 
+## Testing
+
+### Root-Level Testing (Recommended)
+
+```bash
+# Test everything at once
+npm test              # Run all tests (client + server)
+npm run test:client   # Run only client tests
+npm run test:server   # Run only server tests
+```
+
 ### Client-Side Tests
 
 ```bash
@@ -131,6 +161,23 @@ cd server
 npm test              # Run tests once
 npm run test:watch    # Run tests in watch mode
 npm run test:coverage # Run tests with coverage
+```
+
+### Test Coverage
+
+- **Frontend**: TaskItem component, utility functions, and error boundaries
+- **Backend**: Helper functions, authentication logic, and API validation
+
+## Development Scripts
+
+The root package.json provides convenient scripts for development:
+
+```bash
+npm install          # Install all dependencies (client + server)
+npm run dev          # Start both client and server in development
+npm test             # Run all tests
+npm run docker:up    # Start with Docker Compose
+npm run docker:down  # Stop Docker containers
 ```
 
 ## API Endpoints
@@ -160,12 +207,21 @@ npm run test:coverage # Run tests with coverage
 
 ## Features in Detail
 
+### User Interface
+
+- **Modern Design**: Glassmorphism effects with backdrop blur and gradient overlays
+- **Responsive Layout**: Mobile-first design that works on all devices
+- **Interactive Elements**: Hover animations, loading states, and smooth transitions
+- **Custom Modals**: Professional confirmation dialogs for delete operations
+- **Toast Notifications**: Real-time feedback for user actions
+
 ### Task Properties
 
 - **Title**: Required, up to 100 characters
 - **Description**: Optional, up to 500 characters
 - **Status**: Pending, In Progress, or Completed
 - **Priority**: Low, Medium, or High
+- **Timestamps**: Automatic creation and update tracking
 
 ### Filtering Options
 
@@ -174,14 +230,51 @@ npm run test:coverage # Run tests with coverage
 - Filter by priority
 - Sort by date, title, or priority
 
+### Performance Features
+
+- **Optimistic UI Updates**: Immediate feedback before server confirmation
+- **Error Boundaries**: Graceful error handling in React components
+- **Lazy Loading**: Efficient component loading strategies
+- **Database Indexing**: Optimized queries for fast task retrieval
+
 ## Security Features
 
-- Password hashing with bcrypt
-- JWT token authentication
-- Input validation and sanitization
-- Rate limiting
-- CORS configuration
-- Security headers with Helmet
+- **Password Hashing**: bcrypt with salt rounds for secure password storage
+- **JWT Authentication**: Stateless authentication with configurable expiration
+- **Input Validation**: Server-side validation using express-validator
+- **Rate Limiting**: Protection against brute force attacks
+- **CORS Configuration**: Controlled cross-origin resource sharing
+- **Security Headers**: Helmet.js for security headers
+- **Error Handling**: Global error middleware that doesn't expose sensitive data
+- **Code Comments**: Comprehensive documentation for security-critical sections
+
+## Project Structure
+
+```
+task-based-web-app/
+├── client/                 # React frontend
+│   ├── src/
+│   │   ├── components/     # Reusable UI components
+│   │   ├── pages/          # Main application pages
+│   │   ├── context/        # React context providers
+│   │   ├── services/       # API service layer
+│   │   ├── hooks/          # Custom React hooks
+│   │   ├── utils/          # Utility functions
+│   │   └── tests/          # Frontend tests
+│   └── Dockerfile
+├── server/                 # Node.js backend
+│   ├── src/
+│   │   ├── controllers/    # Route handlers
+│   │   ├── middleware/     # Express middleware
+│   │   ├── models/         # Mongoose schemas
+│   │   ├── routes/         # API routes
+│   │   ├── config/         # Database configuration
+│   │   └── utils/          # Backend utilities
+│   └── tests/              # Backend tests
+├── docker-compose.yml      # Docker orchestration
+├── package.json           # Root package with scripts
+└── README.md              # Project documentation
+```
 
 ## Testing
 
