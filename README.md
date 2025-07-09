@@ -115,8 +115,6 @@ Create a `.env` file in the client folder with the following:
 VITE_API_URL=http://localhost:5000/api
 ```
 
-## Testing
-
 ### Client-Side Tests
 
 ```bash
