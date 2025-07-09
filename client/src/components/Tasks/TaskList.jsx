@@ -22,25 +22,29 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }) => {
 
   if (tasks.length === 0) {
     return (
-      <div className="text-center py-20">
-        <div className="mb-8">
-          <div className="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 p-8 rounded-3xl w-32 h-32 mx-auto flex items-center justify-center shadow-lg">
-            <FileText className="h-16 w-16 text-gray-400" />
+      <div className="text-center py-12 sm:py-20">
+        <div className="mb-6 sm:mb-8">
+          <div className="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 p-6 sm:p-8 rounded-2xl sm:rounded-3xl w-24 h-24 sm:w-32 sm:h-32 mx-auto flex items-center justify-center shadow-lg">
+            <FileText className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400" />
           </div>
         </div>
 
-        <h3 className="text-2xl font-bold text-gray-900 mb-3">No tasks yet</h3>
-        <p className="text-gray-600 mb-8 max-w-md mx-auto text-lg leading-relaxed">
+        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3">
+          No tasks yet
+        </h3>
+        <p className="text-gray-600 mb-6 sm:mb-8 max-w-md mx-auto text-base sm:text-lg leading-relaxed px-4">
           Start your productivity journey! Create your first task and take
           control of your day.
         </p>
 
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-2xl p-6 max-w-sm mx-auto">
-          <div className="flex items-center justify-center space-x-3 text-blue-600 mb-2">
-            <Plus className="h-5 w-5" />
-            <span className="font-semibold text-lg">Get Started</span>
+        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-sm mx-auto">
+          <div className="flex items-center justify-center space-x-2 sm:space-x-3 text-blue-600 mb-2">
+            <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
+            <span className="font-semibold text-base sm:text-lg">
+              Get Started
+            </span>
           </div>
-          <p className="text-blue-700 text-sm">
+          <p className="text-blue-700 text-xs sm:text-sm">
             Click "Create Task" to add your first task
           </p>
         </div>
@@ -49,9 +53,9 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }) => {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Enhanced Tasks Grid with better spacing */}
-      <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+    <div className="space-y-6 sm:space-y-8">
+      {/* Enhanced Tasks Grid with mobile-first responsive design */}
+      <div className="grid gap-4 sm:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
         {tasks.map((task) => (
           <TaskItem
             key={task._id}

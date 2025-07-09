@@ -38,38 +38,38 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
   };
 
   return (
-    <div className="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 p-6 hover:shadow-2xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
+    <div className="group bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-lg border border-white/50 p-4 sm:p-6 hover:shadow-2xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
       {/* Decorative background gradient */}
-      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full -translate-y-10 translate-x-10 opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div className="absolute top-0 right-0 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full -translate-y-8 translate-x-8 sm:-translate-y-10 sm:translate-x-10 opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
 
       <div className="relative z-10">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <div className="flex items-center space-x-3 mb-3">
-              <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-900 transition-colors duration-200">
+        <div className="flex items-start justify-between mb-3 sm:mb-4">
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 mb-3">
+              <h3 className="font-bold text-base sm:text-lg text-gray-900 group-hover:text-blue-900 transition-colors duration-200 truncate">
                 {task.title}
               </h3>
               <span
-                className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${getPriorityColor(
+                className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${getPriorityColor(
                   task.priority
-                )} shadow-sm`}
+                )} shadow-sm flex-shrink-0`}
               >
                 {task.priority}
               </span>
             </div>
 
             {task.description && (
-              <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
+              <p className="text-gray-600 text-sm leading-relaxed mb-3 sm:mb-4 line-clamp-2">
                 {task.description}
               </p>
             )}
 
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0">
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-2">
                   {getStatusIcon(task.status)}
                   <span
-                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
+                    className={`inline-flex items-center px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
                       task.status
                     )} shadow-sm`}
                   >
@@ -98,8 +98,8 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
           </div>
         </div>
 
-        {/* Enhanced footer with better styling */}
-        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+        {/* Enhanced footer with better mobile styling */}
+        <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-gray-100">
           <div className="text-xs text-gray-500 font-medium">
             Created{" "}
             {new Date(task.createdAt).toLocaleDateString("en-US", {
@@ -118,13 +118,17 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
             {task.status === "completed" && (
               <div className="flex items-center space-x-1 text-green-600">
                 <CheckCircle className="h-3 w-3" />
-                <span className="text-xs font-medium">Done</span>
+                <span className="text-xs font-medium hidden sm:inline">
+                  Done
+                </span>
               </div>
             )}
             {task.priority === "high" && task.status !== "completed" && (
               <div className="flex items-center space-x-1 text-red-500">
                 <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <span className="text-xs font-medium">Urgent</span>
+                <span className="text-xs font-medium hidden sm:inline">
+                  Urgent
+                </span>
               </div>
             )}
           </div>
