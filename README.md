@@ -6,39 +6,40 @@ A full-stack task management web application built with React.js, Node.js, Expre
 
 ## Features
 
-* 🔐 **User Authentication**: JWT-based registration and login
-* ✅ **Task Management**: Create, read, update, and delete tasks
-* 🔍 **Search & Filter**: Search tasks by title/description, filter by status and priority
-* 📊 **Sort Options**: Sort tasks by date, title, or priority
-* 🎨 **Clean UI**: Responsive design with Tailwind CSS
-* 🔒 **Secure**: Input validation, authentication middleware, and error handling
+- 🔐 **User Authentication**: JWT-based registration and login
+- ✅ **Task Management**: Create, read, update, and delete tasks
+- 🔍 **Search & Filter**: Search tasks by title/description, filter by status and priority
+- 📊 **Sort Options**: Sort tasks by date, title, or priority
+- 🎨 **Clean UI**: Responsive design with Tailwind CSS
+- 🧪 **Testing**: Unit tests for utility functions and React components
+- 🔒 **Secure**: Input validation, authentication middleware, and error handling
 
 ## Tech Stack
 
 ### Frontend
 
-* React.js 18 with Vite
-* Tailwind CSS for styling
-* React Router for navigation
-* Axios for API calls
-* React Hot Toast for notifications
-* Lucide React for icons
+- React.js 18 with Vite
+- Tailwind CSS for styling
+- React Router for navigation
+- Axios for API calls
+- React Hot Toast for notifications
+- Lucide React for icons
 
 ### Backend
 
-* Node.js with Express.js
-* MongoDB with Mongoose
-* JWT authentication
-* bcrypt for password hashing
-* Express Validator for input validation
-* Helmet for security headers
-* CORS enabled
+- Node.js with Express.js
+- MongoDB with Mongoose
+- JWT authentication
+- bcrypt for password hashing
+- Express Validator for input validation
+- Helmet for security headers
+- CORS enabled
 
 ## Prerequisites
 
-* Node.js (v16 or higher)
-* MongoDB (v5.0 or higher)
-* npm or yarn
+- Node.js (v16 or higher)
+- MongoDB (v5.0 or higher)
+- npm or yarn
 
 ## Installation & Setup
 
@@ -71,7 +72,7 @@ A full-stack task management web application built with React.js, Node.js, Expre
 
 4. **Set up MongoDB**
    You can use MongoDB Atlas or install MongoDB locally.
-   Update the MONGODB\_URI in server/.env accordingly.
+   Update the MONGODB_URI in server/.env accordingly.
 
 ### Option 2: Docker Setup
 
@@ -90,9 +91,9 @@ A full-stack task management web application built with React.js, Node.js, Expre
 
 This will start:
 
-* MongoDB on port 27017
-* Server on port 5000
-* Client on port 3000
+- MongoDB on port 27017
+- Server on port 5000
+- Client on port 3000
 
 ## Environment Variables
 
@@ -114,21 +115,41 @@ Create a `.env` file in the client folder with the following:
 VITE_API_URL=http://localhost:5000/api
 ```
 
+## Testing
+
+### Client-Side Tests
+
+```bash
+cd client
+npm test              # Run tests once
+npm run test:watch    # Run tests in watch mode
+npm run test:coverage # Run tests with coverage
+```
+
+### Server-Side Tests
+
+```bash
+cd server
+npm test              # Run tests once
+npm run test:watch    # Run tests in watch mode
+npm run test:coverage # Run tests with coverage
+```
+
 ## API Endpoints
 
 ### Authentication
 
-* `POST /api/auth/register` - User registration
-* `POST /api/auth/login` - User login
-* `GET /api/auth/profile` - Get user profile
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/auth/profile` - Get user profile
 
 ### Tasks
 
-* `GET /api/tasks` - Get all tasks (with filtering and sorting)
-* `POST /api/tasks` - Create a new task
-* `PUT /api/tasks/:id` - Update a task
-* `DELETE /api/tasks/:id` - Delete a task
-* `GET /api/tasks/stats` - Get task statistics
+- `GET /api/tasks` - Get all tasks (with filtering and sorting)
+- `POST /api/tasks` - Create a new task
+- `PUT /api/tasks/:id` - Update a task
+- `DELETE /api/tasks/:id` - Delete a task
+- `GET /api/tasks/stats` - Get task statistics
 
 ## Usage
 
@@ -143,26 +164,26 @@ VITE_API_URL=http://localhost:5000/api
 
 ### Task Properties
 
-* **Title**: Required, up to 100 characters
-* **Description**: Optional, up to 500 characters
-* **Status**: Pending, In Progress, or Completed
-* **Priority**: Low, Medium, or High
+- **Title**: Required, up to 100 characters
+- **Description**: Optional, up to 500 characters
+- **Status**: Pending, In Progress, or Completed
+- **Priority**: Low, Medium, or High
 
 ### Filtering Options
 
-* Search by title or description
-* Filter by status
-* Filter by priority
-* Sort by date, title, or priority
+- Search by title or description
+- Filter by status
+- Filter by priority
+- Sort by date, title, or priority
 
 ## Security Features
 
-* Password hashing with bcrypt
-* JWT token authentication
-* Input validation and sanitization
-* Rate limiting
-* CORS configuration
-* Security headers with Helmet
+- Password hashing with bcrypt
+- JWT token authentication
+- Input validation and sanitization
+- Rate limiting
+- CORS configuration
+- Security headers with Helmet
 
 ## Testing
 
