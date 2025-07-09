@@ -9,6 +9,7 @@ import {
 import TaskList from "../components/Tasks/TaskList";
 import TaskForm from "../components/Tasks/TaskForm";
 import TaskFilter from "../components/Tasks/TaskFilter";
+import ConfirmationModal from "../components/Common/ConfirmationModal";
 import { taskAPI } from "../services/api";
 import toast from "react-hot-toast";
 
@@ -17,6 +18,11 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  const [deleteModal, setDeleteModal] = useState({
+    isOpen: false,
+    taskId: null,
+    taskTitle: "",
+  });
   const [filters, setFilters] = useState({
     search: "",
     status: "",
@@ -68,17 +74,27 @@ const Dashboard = () => {
   };
 
   const handleDeleteTask = async (taskId) => {
-    if (!window.confirm("Are you sure you want to delete this task?")) {
-      return;
-    }
+    const task = tasks.find((t) => t._id === taskId);
+    setDeleteModal({
+      isOpen: true,
+      taskId,
+      taskTitle: task?.title || "this task",
+    });
+  };
 
+  const confirmDeleteTask = async () => {
     try {
-      await taskAPI.deleteTask(taskId);
-      setTasks(tasks.filter((task) => task._id !== taskId));
+      await taskAPI.deleteTask(deleteModal.taskId);
+      setTasks(tasks.filter((task) => task._id !== deleteModal.taskId));
+      setDeleteModal({ isOpen: false, taskId: null, taskTitle: "" });
       toast.success("🗑️ Task deleted successfully!");
     } catch (error) {
       toast.error("❌ Failed to delete task");
     }
+  };
+
+  const cancelDeleteTask = () => {
+    setDeleteModal({ isOpen: false, taskId: null, taskTitle: "" });
   };
 
   const handleEditTask = (task) => {
@@ -297,6 +313,17 @@ const Dashboard = () => {
           onCancel={handleFormCancel}
         />
       )}
+
+      <ConfirmationModal
+        isOpen={deleteModal.isOpen}
+        onClose={cancelDeleteTask}
+        onConfirm={confirmDeleteTask}
+        title="Delete Task"
+        message={`Are you sure you want to delete "${deleteModal.taskTitle}"? This action cannot be undone.`}
+        confirmText="Delete"
+        cancelText="Cancel"
+        type="danger"
+      />
     </div>
   );
 };
