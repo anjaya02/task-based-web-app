@@ -45,7 +45,7 @@ A full-stack task management web application built with React.js, Node.js, Expre
 1. **Clone the repository**
 
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/anjaya02/task-based-web-app.git
    cd task-manager-app
    ```
 
