@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X } from "lucide-react";
+import { X, CheckSquare, Target, Flag } from "lucide-react";
 
 const TaskForm = ({ task, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -15,96 +15,123 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg w-full max-w-md">
-        <div className="flex items-center justify-between p-6 border-b">
-          <h3 className="text-lg font-semibold">
-            {task ? "Edit Task" : "Create New Task"}
-          </h3>
-          <button
-            onClick={onCancel}
-            className="text-gray-400 hover:text-gray-600"
-          >
-            <X className="h-5 w-5" />
-          </button>
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl w-full max-w-lg shadow-2xl transform animate-in slide-in-from-bottom-4 duration-300 max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-4 rounded-t-2xl">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="bg-white/20 p-2 rounded-lg">
+                <CheckSquare className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white">
+                  {task ? "Edit Task" : "Create New Task"}
+                </h3>
+                <p className="text-blue-100 text-sm">
+                  {task ? "Update task details" : "Add a new task"}
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={onCancel}
+              className="text-white/80 hover:text-white hover:bg-white/20 p-2 rounded-lg transition-all duration-200"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6">
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Title *
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          {/* Title Input */}
+          <div className="space-y-2">
+            <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700">
+              <Target className="h-4 w-4 text-blue-600" />
+              <span>Task Title *</span>
+            </label>
+            <input
+              type="text"
+              required
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-gray-50 focus:bg-white"
+              value={formData.title}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
+              placeholder="Enter task title..."
+            />
+          </div>
+
+          {/* Description Input */}
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-gray-700">
+              Description
+            </label>
+            <textarea
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-gray-50 focus:bg-white resize-none"
+              rows="3"
+              value={formData.description}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+              placeholder="Add details (optional)..."
+            />
+          </div>
+
+          {/* Priority and Status in Grid */}
+          <div className="grid grid-cols-2 gap-4">
+            {/* Priority */}
+            <div className="space-y-2">
+              <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700">
+                <Flag className="h-4 w-4 text-blue-600" />
+                <span>Priority</span>
               </label>
-              <input
-                type="text"
-                required
-                className="input-field"
-                value={formData.title}
+              <select
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-gray-50 focus:bg-white"
+                value={formData.priority}
                 onChange={(e) =>
-                  setFormData({ ...formData, title: e.target.value })
+                  setFormData({ ...formData, priority: e.target.value })
                 }
-                placeholder="Enter task title"
-              />
+              >
+                <option value="high">🔴 High Priority</option>
+                <option value="medium">🟡 Medium Priority</option>
+                <option value="low">🟢 Low Priority</option>
+              </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Description
+            {/* Status */}
+            <div className="space-y-2">
+              <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700">
+                <CheckSquare className="h-4 w-4 text-blue-600" />
+                <span>Status</span>
               </label>
-              <textarea
-                className="input-field"
-                rows="3"
-                value={formData.description}
+              <select
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-gray-50 focus:bg-white"
+                value={formData.status}
                 onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
+                  setFormData({ ...formData, status: e.target.value })
                 }
-                placeholder="Enter task description"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Priority
-                </label>
-                <select
-                  className="input-field"
-                  value={formData.priority}
-                  onChange={(e) =>
-                    setFormData({ ...formData, priority: e.target.value })
-                  }
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Status
-                </label>
-                <select
-                  className="input-field"
-                  value={formData.status}
-                  onChange={(e) =>
-                    setFormData({ ...formData, status: e.target.value })
-                  }
-                >
-                  <option value="pending">Pending</option>
-                  <option value="in-progress">In Progress</option>
-                  <option value="completed">Completed</option>
-                </select>
-              </div>
+              >
+                <option value="pending">📋 Pending</option>
+                <option value="in-progress">⚡ In Progress</option>
+                <option value="completed">✅ Completed</option>
+              </select>
             </div>
           </div>
 
-          <div className="flex justify-end space-x-3 mt-6">
-            <button type="button" onClick={onCancel} className="btn-secondary">
+          {/* Action Buttons */}
+          <div className="flex justify-end space-x-3 pt-4 border-t border-gray-100">
+            <button
+              type="button"
+              onClick={onCancel}
+              className="px-5 py-2.5 text-gray-700 bg-gray-100 hover:bg-gray-200 font-medium rounded-xl transition-all duration-200"
+            >
               Cancel
             </button>
-            <button type="submit" className="btn-primary">
-              {task ? "Update" : "Create"} Task
+            <button
+              type="submit"
+              className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+            >
+              {task ? "Update Task" : "Create Task"}
             </button>
           </div>
         </form>

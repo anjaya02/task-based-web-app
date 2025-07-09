@@ -38,56 +38,97 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow">
-      <div className="flex items-start justify-between">
-        <div className="flex-1">
-          <div className="flex items-center space-x-2 mb-2">
-            <h3 className="font-medium text-gray-900">{task.title}</h3>
-            <span
-              className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getPriorityColor(
-                task.priority
-              )}`}
-            >
-              {task.priority}
-            </span>
-          </div>
+    <div className="group bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 p-6 hover:shadow-2xl hover:scale-105 transition-all duration-300 relative overflow-hidden">
+      {/* Decorative background gradient */}
+      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full -translate-y-10 translate-x-10 opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-          {task.description && (
-            <p className="text-gray-600 text-sm mb-3">{task.description}</p>
-          )}
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              {getStatusIcon(task.status)}
+      <div className="relative z-10">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex-1">
+            <div className="flex items-center space-x-3 mb-3">
+              <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-900 transition-colors duration-200">
+                {task.title}
+              </h3>
               <span
-                className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                  task.status
-                )}`}
+                className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${getPriorityColor(
+                  task.priority
+                )} shadow-sm`}
               >
-                {task.status.replace("-", " ")}
+                {task.priority}
               </span>
             </div>
 
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => onEdit(task)}
-                className="text-gray-400 hover:text-blue-600 transition-colors"
-              >
-                <Edit className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => onDelete(task._id)}
-                className="text-gray-400 hover:text-red-600 transition-colors"
-              >
-                <Trash2 className="h-4 w-4" />
-              </button>
+            {task.description && (
+              <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
+                {task.description}
+              </p>
+            )}
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2">
+                  {getStatusIcon(task.status)}
+                  <span
+                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
+                      task.status
+                    )} shadow-sm`}
+                  >
+                    {task.status.replace("-", " ")}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-2 opacity-70 group-hover:opacity-100 transition-opacity duration-200">
+                <button
+                  onClick={() => onEdit(task)}
+                  className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 hover:scale-110"
+                  title="Edit task"
+                >
+                  <Edit className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => onDelete(task._id)}
+                  className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 hover:scale-110"
+                  title="Delete task"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-3 text-xs text-gray-500">
-        Created: {new Date(task.createdAt).toLocaleDateString()}
+        {/* Enhanced footer with better styling */}
+        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+          <div className="text-xs text-gray-500 font-medium">
+            Created{" "}
+            {new Date(task.createdAt).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year:
+                new Date(task.createdAt).getFullYear() !==
+                new Date().getFullYear()
+                  ? "numeric"
+                  : undefined,
+            })}
+          </div>
+
+          {/* Task completion indicator */}
+          <div className="flex items-center space-x-2">
+            {task.status === "completed" && (
+              <div className="flex items-center space-x-1 text-green-600">
+                <CheckCircle className="h-3 w-3" />
+                <span className="text-xs font-medium">Done</span>
+              </div>
+            )}
+            {task.priority === "high" && task.status !== "completed" && (
+              <div className="flex items-center space-x-1 text-red-500">
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                <span className="text-xs font-medium">Urgent</span>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
