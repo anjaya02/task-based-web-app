@@ -177,7 +177,7 @@ const Dashboard = () => {
             >
               <Plus className="h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-90 transition-transform duration-300" />
               <span className="text-base sm:text-lg font-bold">
-                + Create Task
+                Create Task
               </span>
             </button>
           </div>
