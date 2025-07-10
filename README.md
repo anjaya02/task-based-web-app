@@ -9,11 +9,12 @@ A full-stack task management web application built with React.js, Node.js, Expre
 
 - 🔐 **User Authentication**: JWT-based registration and login
 - ✅ **Task Management**: Create, read, update, and delete tasks
-- 🔍 **Search & Filter**: Search tasks by title/description, filter by status and priority
+- � **Due Date Support**: Optional due dates with overdue detection and validation
+- �🔍 **Search & Filter**: Search tasks by title/description, filter by status and priority
 - 📊 **Sort Options**: Sort tasks by date, title, or priority
 - 🎨 **Modern UI**: Responsive design with glassmorphism effects and Tailwind CSS
-- � **Custom Modals**: Professional confirmation dialogs for critical actions
-- �🧪 **Comprehensive Testing**: Unit tests for both frontend and backend components
+- 🪟 **Custom Modals**: Professional confirmation dialogs for critical actions
+- 🧪 **Comprehensive Testing**: Unit tests for both frontend and backend components
 - 🔒 **Secure**: Input validation, authentication middleware, and error handling
 - 🚀 **Production Ready**: Docker support, error boundaries, and optimized builds
 - 📝 **Well Documented**: Comprehensive code comments and clear documentation
@@ -54,8 +55,8 @@ A full-stack task management web application built with React.js, Node.js, Expre
    ```bash
    git clone https://github.com/anjaya02/task-based-web-app.git
    cd task-based-web-app
-   npm install  # Installs dependencies for both client and server
-   npm run dev  # Starts both client and server concurrently
+   npm run install:all  # Installs dependencies for both client and server
+   npm run dev          # Starts both client and server concurrently
    ```
 
 2. **Set up MongoDB**
@@ -166,19 +167,20 @@ npm run test:coverage # Run tests with coverage
 
 ### Test Coverage
 
-- **Frontend**: TaskItem component, utility functions, and error boundaries
-- **Backend**: Helper functions, authentication logic, and API validation
+- **Frontend**: TaskItem component, TaskFilter component, utility functions, due date logic, and error boundaries
+- **Backend**: Helper functions, authentication logic, API validation, and due date validation
+- **Due Date Testing**: Comprehensive test suite covering edge cases, overdue detection, and date parsing
 
 ## Development Scripts
 
 The root package.json provides convenient scripts for development:
 
 ```bash
-npm install          # Install all dependencies (client + server)
-npm run dev          # Start both client and server in development
-npm test             # Run all tests
-npm run docker:up    # Start with Docker Compose
-npm run docker:down  # Stop Docker containers
+npm run install:all      # Install all dependencies (client + server)
+npm run dev             # Start both client and server in development
+npm test                # Run all tests
+npm run docker:up       # Start with Docker Compose
+npm run docker:down     # Stop Docker containers
 ```
 
 ## API Endpoints
@@ -202,9 +204,10 @@ npm run docker:down  # Stop Docker containers
 1. **Registration**: Create a new account with name, email, and password
 2. **Login**: Sign in with your credentials
 3. **Dashboard**: View all your tasks in a clean interface
-4. **Create Tasks**: Add new tasks with title, description, priority, and status
-5. **Manage Tasks**: Edit or delete existing tasks
+4. **Create Tasks**: Add new tasks with title, description, priority, status, and optional due date
+5. **Manage Tasks**: Edit or delete existing tasks with proper validation
 6. **Filter & Search**: Use the filter bar to find specific tasks
+7. **Due Date Management**: Set due dates and get visual indicators for overdue tasks
 
 ## Features in Detail
 
@@ -222,6 +225,7 @@ npm run docker:down  # Stop Docker containers
 - **Description**: Optional, up to 500 characters
 - **Status**: Pending, In Progress, or Completed
 - **Priority**: Low, Medium, or High
+- **Due Date**: Optional, with overdue detection and validation
 - **Timestamps**: Automatic creation and update tracking
 
 ### Filtering Options
@@ -230,6 +234,19 @@ npm run docker:down  # Stop Docker containers
 - Filter by status
 - Filter by priority
 - Sort by date, title, or priority
+
+## Recent Updates & Bug Fixes
+
+### July 2025 - Due Date Feature Enhancements
+
+- 🐛 **Fixed critical date parsing bug** in TaskForm modal that could cause crashes
+- 🐛 **Improved overdue detection logic** with proper date-only comparison
+- 🐛 **Enhanced date validation** consistency between frontend and backend
+- ✅ **Added comprehensive test coverage** for due date functionality (19+ test cases)
+- 🔧 **Better error handling** for invalid date formats
+- 🎨 **Improved date display** formatting with fallbacks
+
+_Last updated: July 2025_
 
 ### Performance Features
 
@@ -274,19 +291,8 @@ task-based-web-app/
 │   └── tests/              # Backend tests
 ├── docker-compose.yml      # Docker orchestration
 ├── package.json           # Root package with scripts
+├── DUE_DATE_BUGS_REPORT.md # Due date bug fixes documentation
 └── README.md              # Project documentation
-```
-
-## Testing
-
-```bash
-# Run server tests
-cd server
-npm test
-
-# Run client tests
-cd client
-npm test
 ```
 
 ## Deployment
@@ -353,8 +359,8 @@ VITE_API_URL=https://your-backend-domain.com/api
 
 This application is currently deployed and live:
 
-- **Frontend**: Deployed on Vercel at [https://task-based-web-app-nine.vercel.app](https://task-based-web-app-nine.vercel.app)
-- **Backend**: Deployed on Render at [https://task-based-web-app.onrender.com](https://task-based-web-app.onrender.com)
+- **Frontend**: Deployed on Vercel at [https://task-based-web-app.vercel.app](https://task-based-web-app.vercel.app)
+- **Backend**: Deployed on Render at [https://taskmanager-api-zalh.onrender.com](https://taskmanager-api-zalh.onrender.com)
 - **Database**: MongoDB Atlas cloud database
 
 ### Deployment Architecture
@@ -362,7 +368,7 @@ This application is currently deployed and live:
 - **Frontend (Vercel)**:
 
   - Automatic deployments from GitHub
-  - Environment variable: `VITE_API_URL=https://task-based-web-app.onrender.com/api`
+  - Environment variable: `VITE_API_URL=https://taskmanager-api-zalh.onrender.com/api`
   - Optimized builds with Vite
   - Global CDN distribution
 
