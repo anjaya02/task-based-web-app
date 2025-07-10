@@ -35,10 +35,8 @@ const Register = () => {
       await register(formData.name, formData.email, formData.password);
       toast.success("✨ Account created successfully! Welcome to TaskManager!");
     } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-          "❌ Registration failed. Please try again."
-      );
+      // Don't show toast here since the API interceptor already handles it
+      console.error("Registration error:", error);
     } finally {
       setLoading(false);
     }
