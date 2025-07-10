@@ -20,7 +20,11 @@ connectDB();
 app.use(helmet()); // Set security headers
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
+    origin: [
+      process.env.CLIENT_URL || "http://localhost:3000",
+      "https://taskmanager-frontend.vercel.app", // Update this with your actual Vercel domain
+      /\.vercel\.app$/, // Allow all Vercel preview deployments
+    ],
     credentials: true, // Allow cookies for authentication
   })
 );
