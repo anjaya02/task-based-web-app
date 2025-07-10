@@ -15,7 +15,7 @@ JWT_EXPIRES_IN=30d
 
 ```
 Environment Variables:
-VITE_API_URL=https://your-render-app.onrender.com/api
+VITE_API_URL=https://taskmanager-api-zalh.onrender.com/api
 ```
 
 ## ⏰ JWT Expiry Behavior:
@@ -36,18 +36,20 @@ VITE_API_URL=https://your-render-app.onrender.com/api
 
 ## 🔍 Monitoring URLs:
 
-- **Health Check**: https://your-render-app.onrender.com/health
-- **API Status**: https://your-render-app.onrender.com/api/auth/profile (requires login)
+* **Health Check**: [https://taskmanager-api-zalh.onrender.com/api/health](https://taskmanager-api-zalh.onrender.com/api/health)
+* **API Status**: [https://taskmanager-api-zalh.onrender.com/api/auth/profile](https://taskmanager-api-zalh.onrender.com/api/auth/profile) (requires login)
 
 ## 🚨 Render Free Tier Limitations:
 
-- **Sleep Mode**: App sleeps after 15 minutes of inactivity
-- **Cold Start**: First request after sleep takes 10-30 seconds
-- **Monthly Hours**: 750 hours/month (plenty for demo purposes)
-- **Auto-Wake**: App wakes up on any request
+* **Sleep Mode**: App sleeps after 15 minutes of inactivity
+* **Cold Start**: First request after sleep takes 10-30 seconds
+* **Monthly Hours**: 750 hours/month (plenty for demo purposes)
+* **Auto-Wake**: App wakes up on any request
 
 ## 💡 Pro Tips:
 
 1. **For Assignment**: 30 days is perfect for evaluation period
-2. **For Production**: Consider paid plan ($7/month) for always-on service
+2. **For Production**: Consider paid plan (\$7/month) for always-on service
 3. **Monitoring**: Health check endpoint helps track uptime
+
+
