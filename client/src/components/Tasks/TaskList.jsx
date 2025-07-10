@@ -72,7 +72,7 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }) => {
             <p className="text-blue-700 text-sm font-medium">
               Click the{" "}
               <span className="bg-blue-100 px-2 py-1 rounded-md font-bold">
-                + Create Task
+                Create Task
               </span>{" "}
               button above
             </p>
