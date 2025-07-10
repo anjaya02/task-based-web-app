@@ -4,6 +4,7 @@ services:
     name: taskmanager-api
     env: node
     plan: free
+    rootDir: server            # <- THIS is crucial
     buildCommand: npm install
     startCommand: npm start
     envVars:
@@ -16,4 +17,4 @@ services:
       - key: JWT_SECRET
         sync: false  # Set this manually in Render dashboard
       - key: JWT_EXPIRES_IN
-        value: 7d
+        value: 30d  # Extended to 30 days for better stability
