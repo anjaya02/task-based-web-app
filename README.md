@@ -1,6 +1,6 @@
 # Task Manager Application
 
-🌍 **Live Demo**: [your-live-site-link]
+🌍 **Live Demo**: [Coming Soon - Will be deployed before submission]
 
 A full-stack task management web application built with React.js, Node.js, Express.js, and MongoDB.
 
@@ -290,17 +290,63 @@ npm test
 
 ## Deployment
 
-### Client (Vercel/Netlify)
+### Quick Deploy with Docker (Recommended)
 
-1. Build the client: `npm run build`
-2. Deploy the `dist` folder to your hosting service
-3. Set environment variables for production API URL
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd task-based-web-app
 
-### Server (Render/Railway/Heroku)
+# Start with Docker Compose
+docker-compose up --build
 
-1. Deploy the server folder to your hosting service
-2. Set environment variables for production
-3. Ensure MongoDB connection is configured
+# Access the application
+# Frontend: http://localhost:3000
+# Backend: http://localhost:5000
+```
+
+### Manual Deployment
+
+#### Client (Vercel/Netlify)
+
+```bash
+cd client
+npm install
+npm run build
+# Deploy the 'dist' folder to your hosting service
+# Set environment variable: VITE_API_URL=https://your-backend-url/api
+```
+
+#### Server (Render/Railway/Heroku)
+
+```bash
+cd server
+npm install
+# Set environment variables:
+# NODE_ENV=production
+# MONGODB_URI=your-mongodb-connection-string
+# JWT_SECRET=your-secure-jwt-secret
+# PORT=5000
+npm start
+```
+
+### Environment Variables for Production
+
+**Server (.env):**
+
+```bash
+NODE_ENV=production
+PORT=5000
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/taskmanager
+JWT_SECRET=your-256-bit-secret-key
+JWT_EXPIRES_IN=7d
+```
+
+**Client (.env):**
+
+```bash
+VITE_API_URL=https://your-backend-domain.com/api
+```
 
 ## Contributing
 

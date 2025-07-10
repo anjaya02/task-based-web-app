@@ -51,4 +51,15 @@ export const taskValidation = [
     .optional()
     .isIn(["low", "medium", "high"])
     .withMessage("Priority must be low, medium, or high"),
+  body("dueDate")
+    .optional()
+    .isISO8601()
+    .toDate()
+    .withMessage("Due date must be a valid date")
+    .custom((value) => {
+      if (value && new Date(value) < new Date().setHours(0, 0, 0, 0)) {
+        throw new Error("Due date cannot be in the past");
+      }
+      return true;
+    }),
 ];

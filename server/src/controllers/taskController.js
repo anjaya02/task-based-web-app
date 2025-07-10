@@ -51,6 +51,8 @@ export const getTasks = async (req, res) => {
 
     // Execute query with pagination
     let tasks;
+    let total;
+
     if (customPrioritySort) {
       // For priority sorting, use aggregation pipeline to create custom sort order
       const aggregationPipeline = [
@@ -70,20 +72,30 @@ export const getTasks = async (req, res) => {
           },
         },
         { $sort: { priorityOrder: -1 } }, // Sort by priority order descending (high to low)
+      ];
+
+      // Get total count with same filter conditions
+      const countPipeline = [...aggregationPipeline, { $count: "total" }];
+      const countResult = await Task.aggregate(countPipeline);
+      total = countResult.length > 0 ? countResult[0].total : 0;
+
+      // Get paginated results
+      const tasksPipeline = [
+        ...aggregationPipeline,
         { $skip: (page - 1) * limit },
         { $limit: limit * 1 },
         { $project: { priorityOrder: 0 } }, // Remove the temporary field
       ];
 
-      tasks = await Task.aggregate(aggregationPipeline);
+      tasks = await Task.aggregate(tasksPipeline);
     } else {
       tasks = await Task.find(filter)
         .sort(sortOptions)
         .limit(limit * 1)
         .skip((page - 1) * limit);
-    }
 
-    const total = await Task.countDocuments(filter);
+      total = await Task.countDocuments(filter);
+    }
 
     res.json({
       message: "Tasks retrieved successfully",
@@ -103,13 +115,14 @@ export const getTasks = async (req, res) => {
 
 export const createTask = async (req, res) => {
   try {
-    const { title, description, status, priority } = req.body;
+    const { title, description, status, priority, dueDate } = req.body;
 
     const task = await Task.create({
       title,
       description,
       status,
       priority,
+      dueDate,
       user: req.user._id,
     });
 
@@ -126,7 +139,7 @@ export const createTask = async (req, res) => {
 export const updateTask = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, status, priority } = req.body;
+    const { title, description, status, priority, dueDate } = req.body;
 
     const task = await Task.findOne({ _id: id, user: req.user._id });
 
@@ -136,7 +149,7 @@ export const updateTask = async (req, res) => {
 
     const updatedTask = await Task.findByIdAndUpdate(
       id,
-      { title, description, status, priority },
+      { title, description, status, priority, dueDate },
       { new: true, runValidators: true }
     );
 

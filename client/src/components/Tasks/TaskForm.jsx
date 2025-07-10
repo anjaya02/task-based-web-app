@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, CheckSquare, Target, Flag } from "lucide-react";
+import { X, CheckSquare, Target, Flag, Calendar } from "lucide-react";
 
 const TaskForm = ({ task, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -7,6 +7,7 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
     description: task?.description || "",
     priority: task?.priority || "medium",
     status: task?.status || "pending",
+    dueDate: task?.dueDate ? task.dueDate.split("T")[0] : "", // Format for date input
   });
 
   const handleSubmit = (e) => {
@@ -116,6 +117,23 @@ const TaskForm = ({ task, onSubmit, onCancel }) => {
                 <option value="completed">✅ Completed</option>
               </select>
             </div>
+          </div>
+
+          {/* Due Date */}
+          <div className="space-y-2">
+            <label className="flex items-center space-x-2 text-sm font-semibold text-gray-700">
+              <Calendar className="h-4 w-4 text-blue-600" />
+              <span>Due Date (Optional)</span>
+            </label>
+            <input
+              type="date"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors bg-gray-50 focus:bg-white"
+              value={formData.dueDate}
+              min={new Date().toISOString().split("T")[0]} // Prevent past dates
+              onChange={(e) =>
+                setFormData({ ...formData, dueDate: e.target.value })
+              }
+            />
           </div>
 
           {/* Action Buttons */}

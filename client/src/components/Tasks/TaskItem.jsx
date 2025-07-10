@@ -1,5 +1,13 @@
 import React from "react";
-import { Edit, Trash2, Clock, AlertCircle, CheckCircle } from "lucide-react";
+import {
+  Edit,
+  Trash2,
+  Clock,
+  AlertCircle,
+  CheckCircle,
+  Calendar,
+} from "lucide-react";
+import { isTaskOverdue } from "../../utils/taskUtils";
 
 const TaskItem = ({ task, onEdit, onDelete }) => {
   // Color mapping for task priority badges
@@ -67,6 +75,25 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
               <p className="text-gray-600 text-sm leading-relaxed mb-3 sm:mb-4 line-clamp-2">
                 {task.description}
               </p>
+            )}
+
+            {/* Due Date Display */}
+            {task.dueDate && (
+              <div
+                className={`flex items-center space-x-2 mb-3 sm:mb-4 text-sm ${
+                  isTaskOverdue(task)
+                    ? "text-red-600 bg-red-50 px-3 py-1 rounded-lg"
+                    : "text-gray-600"
+                }`}
+              >
+                <Calendar className="h-4 w-4" />
+                <span>
+                  Due: {new Date(task.dueDate).toLocaleDateString()}
+                  {isTaskOverdue(task) && (
+                    <span className="ml-2 font-semibold">⚠️ Overdue</span>
+                  )}
+                </span>
+              </div>
             )}
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0">
