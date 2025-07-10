@@ -25,7 +25,6 @@ const Login = () => {
       await login(formData.email, formData.password);
       toast.success("🎉 Welcome back! You're successfully logged in.");
     } catch (error) {
-      // Don't show toast here since the API interceptor already handles it
       console.error("Login error:", error);
     } finally {
       setLoading(false);

@@ -40,12 +40,12 @@ const TaskList = ({ tasks, onEdit, onDelete, loading }) => {
         <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 max-w-sm mx-auto">
           <div className="flex items-center justify-center space-x-2 sm:space-x-3 text-blue-600 mb-2">
             <Plus className="h-4 w-4 sm:h-5 sm:w-5" />
-            <span className="font-semibold text-base sm:text-lg">
-              Get Started
+            <span className="font-bold text-base sm:text-lg">
+              + Create Task
             </span>
           </div>
           <p className="text-blue-700 text-xs sm:text-sm">
-            Click "Create Task" to add your first task
+            Click <strong>"+ Create Task"</strong> to add your first task
           </p>
         </div>
       </div>

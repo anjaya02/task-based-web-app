@@ -359,13 +359,15 @@ This application is currently deployed and live:
 
 ### Deployment Architecture
 
-- **Frontend (Vercel)**: 
+- **Frontend (Vercel)**:
+
   - Automatic deployments from GitHub
   - Environment variable: `VITE_API_URL=https://task-based-web-app.onrender.com/api`
   - Optimized builds with Vite
   - Global CDN distribution
 
 - **Backend (Render)**:
+
   - Automatic deployments from GitHub
   - Environment variables configured for production
   - Health check endpoint at `/health`
@@ -379,7 +381,7 @@ This application is currently deployed and live:
 ### Deployment Files
 
 - `render.yaml` - Render deployment configuration
-- `client/vercel.json` - Vercel deployment configuration  
+- `client/vercel.json` - Vercel deployment configuration
 - `PRODUCTION_GUIDE.md` - Detailed production deployment guide
 - `DEPLOYMENT_CHECKLIST.md` - Pre-deployment checklist
 
