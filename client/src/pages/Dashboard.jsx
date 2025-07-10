@@ -176,7 +176,9 @@ const Dashboard = () => {
               className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 sm:py-4 px-6 sm:px-8 rounded-xl sm:rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-2 sm:space-x-3 group"
             >
               <Plus className="h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-90 transition-transform duration-300" />
-              <span className="text-base sm:text-lg font-bold">+ Create Task</span>
+              <span className="text-base sm:text-lg font-bold">
+                + Create Task
+              </span>
             </button>
           </div>
 
