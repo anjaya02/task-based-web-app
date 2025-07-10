@@ -35,24 +35,53 @@ export const getTasks = async (req, res) => {
 
     // Configure sorting options
     const sortOptions = {};
+    let customPrioritySort = false;
+
     switch (sortBy) {
       case "title":
         sortOptions.title = 1;
         break;
       case "priority":
-        // Note: Could implement custom priority sorting logic here
-        const priorityOrder = { high: 3, medium: 2, low: 1 };
-        sortOptions.priority = 1;
+        // Use custom priority sorting logic for proper high -> medium -> low order
+        customPrioritySort = true;
         break;
       default:
         sortOptions.createdAt = -1; // Newest first
     }
 
     // Execute query with pagination
-    const tasks = await Task.find(filter)
-      .sort(sortOptions)
-      .limit(limit * 1)
-      .skip((page - 1) * limit);
+    let tasks;
+    if (customPrioritySort) {
+      // For priority sorting, use aggregation pipeline to create custom sort order
+      const aggregationPipeline = [
+        { $match: filter },
+        {
+          $addFields: {
+            priorityOrder: {
+              $switch: {
+                branches: [
+                  { case: { $eq: ["$priority", "high"] }, then: 3 },
+                  { case: { $eq: ["$priority", "medium"] }, then: 2 },
+                  { case: { $eq: ["$priority", "low"] }, then: 1 },
+                ],
+                default: 0,
+              },
+            },
+          },
+        },
+        { $sort: { priorityOrder: -1 } }, // Sort by priority order descending (high to low)
+        { $skip: (page - 1) * limit },
+        { $limit: limit * 1 },
+        { $project: { priorityOrder: 0 } }, // Remove the temporary field
+      ];
+
+      tasks = await Task.aggregate(aggregationPipeline);
+    } else {
+      tasks = await Task.find(filter)
+        .sort(sortOptions)
+        .limit(limit * 1)
+        .skip((page - 1) * limit);
+    }
 
     const total = await Task.countDocuments(filter);
 

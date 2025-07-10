@@ -151,6 +151,50 @@ describe("Task Management Endpoints", () => {
       );
       expect(foundTask).toBeDefined();
     });
+
+    it("should sort tasks by priority correctly (high -> medium -> low)", async () => {
+      // Create tasks with different priorities
+      const taskData = [
+        { title: "Low Priority Task", priority: "low" },
+        { title: "High Priority Task", priority: "high" },
+        { title: "Medium Priority Task", priority: "medium" },
+      ];
+
+      // Create the tasks
+      for (const task of taskData) {
+        await request(app)
+          .post("/api/tasks")
+          .set("Authorization", `Bearer ${authToken}`)
+          .send(task);
+      }
+
+      // Get tasks sorted by priority
+      const response = await request(app)
+        .get("/api/tasks?sortBy=priority")
+        .set("Authorization", `Bearer ${authToken}`)
+        .expect(200);
+
+      expect(response.body).toHaveProperty("tasks");
+      expect(response.body.tasks.length).toBeGreaterThan(0);
+
+      // Find our test tasks in the response
+      const sortedTasks = response.body.tasks.filter((task) =>
+        task.title.includes("Priority Task")
+      );
+
+      // Verify they are sorted correctly: high -> medium -> low
+      expect(sortedTasks.length).toBe(3);
+
+      // Check the order of priorities
+      const priorities = sortedTasks.map((task) => task.priority);
+      let highIndex = priorities.indexOf("high");
+      let mediumIndex = priorities.indexOf("medium");
+      let lowIndex = priorities.indexOf("low");
+
+      // High should come before medium, medium should come before low
+      expect(highIndex).toBeLessThan(mediumIndex);
+      expect(mediumIndex).toBeLessThan(lowIndex);
+    });
   });
 
   describe("PUT /api/tasks/:id", () => {

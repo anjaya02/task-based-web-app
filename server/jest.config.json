@@ -1,5 +1,9 @@
 {
   "testEnvironment": "node",
+  "extensionsToTreatAsEsm": [".js"],
+  "globals": {
+    "__DEV__": true
+  },
   "transform": {},
   "testMatch": ["**/tests/**/*.test.js"],
   "collectCoverageFrom": ["src/**/*.js", "!src/app.js"]
