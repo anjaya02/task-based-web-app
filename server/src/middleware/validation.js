@@ -52,12 +52,12 @@ export const taskValidation = [
     .isIn(["low", "medium", "high"])
     .withMessage("Priority must be low, medium, or high"),
   body("dueDate")
-    .optional()
+    .optional({ checkFalsy: true }) // ← skip if dueDate is "", null, undefined, 0, or false
     .isISO8601()
+    .withMessage("Due date must be a valid ISO date")
     .toDate()
-    .withMessage("Due date must be a valid date")
     .custom((value) => {
-      if (value && new Date(value) < new Date().setHours(0, 0, 0, 0)) {
+      if (value < new Date().setHours(0, 0, 0, 0)) {
         throw new Error("Due date cannot be in the past");
       }
       return true;
