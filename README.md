@@ -1,6 +1,7 @@
 # Task Manager Application
 
-🌍 **Live Demo**: [Coming Soon - Will be deployed before submission]
+🌍 **Live Demo**: [https://task-based-web-app-nine.vercel.app](https://task-based-web-app-nine.vercel.app)
+🔗 **Backend API**: [https://task-based-web-app.onrender.com](https://task-based-web-app.onrender.com)
 
 A full-stack task management web application built with React.js, Node.js, Express.js, and MongoDB.
 
@@ -347,6 +348,40 @@ JWT_EXPIRES_IN=7d
 ```bash
 VITE_API_URL=https://your-backend-domain.com/api
 ```
+
+## Production Deployment
+
+This application is currently deployed and live:
+
+- **Frontend**: Deployed on Vercel at [https://task-based-web-app-nine.vercel.app](https://task-based-web-app-nine.vercel.app)
+- **Backend**: Deployed on Render at [https://task-based-web-app.onrender.com](https://task-based-web-app.onrender.com)
+- **Database**: MongoDB Atlas cloud database
+
+### Deployment Architecture
+
+- **Frontend (Vercel)**: 
+  - Automatic deployments from GitHub
+  - Environment variable: `VITE_API_URL=https://task-based-web-app.onrender.com/api`
+  - Optimized builds with Vite
+  - Global CDN distribution
+
+- **Backend (Render)**:
+  - Automatic deployments from GitHub
+  - Environment variables configured for production
+  - Health check endpoint at `/health`
+  - Graceful shutdown handling
+
+- **Database (MongoDB Atlas)**:
+  - Cloud-hosted MongoDB cluster
+  - Connection pooling and automatic scaling
+  - Database indexes for optimal performance
+
+### Deployment Files
+
+- `render.yaml` - Render deployment configuration
+- `client/vercel.json` - Vercel deployment configuration  
+- `PRODUCTION_GUIDE.md` - Detailed production deployment guide
+- `DEPLOYMENT_CHECKLIST.md` - Pre-deployment checklist
 
 ## Contributing
 
