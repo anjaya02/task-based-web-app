@@ -13,10 +13,21 @@ export const formatTaskStatus = (status) => {
 };
 
 export const isTaskOverdue = (task) => {
-  if (!task.dueDate) return false;
-  const dueDate = new Date(task.dueDate);
-  const today = new Date();
-  return dueDate < today && task.status !== "completed";
+  if (!task.dueDate || task.status === "completed") return false;
+
+  try {
+    const dueDate = new Date(task.dueDate);
+    const today = new Date();
+
+    // Reset time to compare dates only
+    dueDate.setHours(23, 59, 59, 999); // End of due date
+    today.setHours(0, 0, 0, 0); // Start of today
+
+    return dueDate < today;
+  } catch (error) {
+    console.warn("Invalid due date format:", task.dueDate);
+    return false;
+  }
 };
 
 export const getTaskStatusColor = (status) => {

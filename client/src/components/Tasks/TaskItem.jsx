@@ -88,7 +88,21 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
               >
                 <Calendar className="h-4 w-4" />
                 <span>
-                  Due: {new Date(task.dueDate).toLocaleDateString()}
+                  Due:{" "}
+                  {(() => {
+                    try {
+                      return new Date(task.dueDate).toLocaleDateString(
+                        undefined,
+                        {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        }
+                      );
+                    } catch (error) {
+                      return "Invalid date";
+                    }
+                  })()}
                   {isTaskOverdue(task) && (
                     <span className="ml-2 font-semibold">⚠️ Overdue</span>
                   )}

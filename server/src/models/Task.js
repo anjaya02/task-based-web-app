@@ -28,8 +28,16 @@ const taskSchema = new mongoose.Schema(
       type: Date,
       validate: {
         validator: function (value) {
-          // If dueDate is provided, it should be in the future or today
-          return !value || value >= new Date().setHours(0, 0, 0, 0);
+          // If dueDate is provided, it should be today or in the future
+          if (!value) return true; // Optional field
+
+          const today = new Date();
+          today.setHours(0, 0, 0, 0); // Start of today
+
+          const dueDate = new Date(value);
+          dueDate.setHours(0, 0, 0, 0); // Start of due date
+
+          return dueDate >= today;
         },
         message: "Due date cannot be in the past",
       },

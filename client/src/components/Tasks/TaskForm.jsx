@@ -2,16 +2,42 @@ import React, { useState } from "react";
 import { X, CheckSquare, Target, Flag, Calendar } from "lucide-react";
 
 const TaskForm = ({ task, onSubmit, onCancel }) => {
+  // Safe date formatting helper
+  const formatDateForInput = (dateString) => {
+    if (!dateString) return "";
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return "";
+      return date.toISOString().split("T")[0];
+    } catch (error) {
+      console.warn("Invalid date format:", dateString);
+      return "";
+    }
+  };
+
   const [formData, setFormData] = useState({
     title: task?.title || "",
     description: task?.description || "",
     priority: task?.priority || "medium",
     status: task?.status || "pending",
-    dueDate: task?.dueDate ? task.dueDate.split("T")[0] : "", // Format for date input
+    dueDate: formatDateForInput(task?.dueDate),
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validate due date if provided
+    if (formData.dueDate) {
+      const selectedDate = new Date(formData.dueDate);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (selectedDate < today) {
+        alert("Due date cannot be in the past");
+        return;
+      }
+    }
+
     onSubmit(formData);
   };
 
