@@ -1,7 +1,6 @@
 # Task Manager Application
 
-🌍 **Live Demo**: [https://task-based-web-app.vercel.app](https://task-based-web-app.vercel.app)
-🔗 **Backend API**: [https://taskmanager-api-zalh.onrender.com](https://taskmanager-api-zalh.onrender.com)
+🌍 **Live Demo**: [Coming Soon - Will be deployed before submission]
 
 A full-stack task management web application built with React.js, Node.js, Express.js, and MongoDB.
 

@@ -4,7 +4,7 @@ services:
     name: taskmanager-api
     env: node
     plan: free
-    rootDir: server            # <- THIS is crucial
+    rootDir: server # <- THIS is crucial
     buildCommand: npm install
     startCommand: npm start
     envVars:
@@ -13,8 +13,8 @@ services:
       - key: PORT
         value: 10000
       - key: MONGODB_URI
-        sync: false  # Set this manually in Render dashboard
+        sync: false # Set this manually in Render dashboard
       - key: JWT_SECRET
-        sync: false  # Set this manually in Render dashboard
+        sync: false # Set this manually in Render dashboard
       - key: JWT_EXPIRES_IN
-        value: 30d  # Extended to 30 days for better stability
+        value: 30d # Extended to 30 days for better stability

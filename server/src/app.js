@@ -64,7 +64,7 @@ app.get("/health", (req, res) => {
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     environment: process.env.NODE_ENV,
-    version: "1.0.0"
+    version: "1.0.0",
   });
 });
 
@@ -82,10 +82,10 @@ const server = app.listen(PORT, () => {
 });
 
 // Graceful shutdown handling
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received, shutting down gracefully...');
+process.on("SIGTERM", () => {
+  console.log("SIGTERM received, shutting down gracefully...");
   server.close(() => {
-    console.log('Process terminated');
+    console.log("Process terminated");
   });
 });
 

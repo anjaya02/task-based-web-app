@@ -1,12 +1,14 @@
 # 🚀 Deployment Checklist
 
 ## Pre-Deployment
+
 - [x] Code is committed and pushed to GitHub
 - [x] JWT secret generated
 - [x] CORS configuration updated
 - [x] Build scripts configured
 
 ## Database Setup (MongoDB Atlas)
+
 - [ ] MongoDB Atlas account created
 - [ ] Database cluster created (free tier)
 - [ ] Database user created with read/write permissions
@@ -14,6 +16,7 @@
 - [ ] Connection string obtained
 
 ## Backend Deployment (Render)
+
 - [ ] Render account created
 - [ ] New Web Service created
 - [ ] GitHub repository connected
@@ -30,6 +33,7 @@
 - [ ] Backend URL obtained (e.g., https://taskmanager-api.onrender.com)
 
 ## Frontend Deployment (Vercel)
+
 - [ ] Vercel account created
 - [ ] New project created
 - [ ] GitHub repository imported
@@ -43,6 +47,7 @@
 - [ ] Frontend URL obtained (e.g., https://taskmanager-frontend.vercel.app)
 
 ## Post-Deployment Testing
+
 - [ ] Frontend loads correctly
 - [ ] User registration works
 - [ ] User login works
@@ -53,6 +58,7 @@
 - [ ] All features tested on mobile
 
 ## Final Steps
+
 - [ ] Update README.md with live demo links
 - [ ] Test application thoroughly
 - [ ] Document any production-specific notes
